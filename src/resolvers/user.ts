@@ -1,4 +1,4 @@
-import { User } from '../entities/user';
+import { User } from '../models/user';
 import { Ctx, Query, Resolver } from 'type-graphql';
 
 @Resolver(User)
