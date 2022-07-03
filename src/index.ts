@@ -13,7 +13,7 @@ import { COOKIE_NAME, __prod__ } from './constants';
 async function main() {
   mongoose.connect(
     'mongodb://localhost:27017/airbnbClone',
-    { useNewUrlParse: true, useUnifiedTopology: true } as ConnectOptions,
+    {} as ConnectOptions,
     (err) => {
       if (err) throw err;
       console.log('Successfully connected');
