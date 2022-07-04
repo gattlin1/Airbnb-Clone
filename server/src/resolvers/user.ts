@@ -46,8 +46,16 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  me(@Ctx() { req }: MyContext) {
-    console.log(req);
+  async me(@Ctx() { req }: MyContext) {
+    // you're not logged in
+    if (!req.session.userId) return null;
+
+    return await UserModel.findById(req.session.userId).exec();
+  }
+
+  @Query(() => [User])
+  async users(): Promise<User[]> {
+    return UserModel.find({}).exec();
   }
 
   @Mutation(() => UserResponse)
@@ -77,6 +85,47 @@ export class UserResolver {
 
     // automatically login user
     req.session.userId = user?.id;
+
+    return { user };
+  }
+
+  @Mutation(() => UserResponse)
+  async login(
+    @Arg('usernameOrEmail') usernameOrEmail: string,
+    @Arg('password') password: string,
+    @Ctx() { req }: MyContext
+  ): Promise<UserResponse> {
+    const user = await UserModel.findOne(
+      usernameOrEmail.includes('@')
+        ? { email: usernameOrEmail }
+        : { username: usernameOrEmail }
+    ).exec();
+
+    const credentialsErrorMsg = [
+      {
+        field: 'usernameOrEmail',
+        message: 'login credentials are incorrect',
+      },
+      {
+        field: 'password',
+        message: 'login credentials are incorrect',
+      },
+    ];
+
+    if (!user) {
+      return {
+        errors: credentialsErrorMsg,
+      };
+    }
+
+    const valid = await argon2.verify(user.password, password);
+    if (!valid) {
+      return {
+        errors: credentialsErrorMsg,
+      };
+    }
+
+    req.session.userId = user.id;
 
     return { user };
   }
