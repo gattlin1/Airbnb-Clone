@@ -14,6 +14,7 @@ import { MyContext } from '../types';
 import { CredentialsInput } from './CredentialsInput';
 import argon2 from 'argon2';
 import { validateRegister } from '../util/validateRegister';
+import { COOKIE_NAME } from '../constants';
 
 @ObjectType()
 class FieldError {
@@ -128,5 +129,20 @@ export class UserResolver {
     req.session.userId = user.id;
 
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  async logout(@Ctx() { req, res }: MyContext) {
+    return new Promise((resolve) =>
+      req.session.destroy((err) => {
+        res.clearCookie(COOKIE_NAME);
+
+        if (err) {
+          resolve(false);
+          return;
+        }
+        resolve(true);
+      })
+    );
   }
 }
