@@ -9,6 +9,7 @@ import Redis from 'ioredis';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { COOKIE_NAME, __prod__ } from './constants';
+import { ListingResolver } from './resolvers/listing';
 
 async function main() {
   mongoose.connect(
@@ -54,7 +55,7 @@ async function main() {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, ListingResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
