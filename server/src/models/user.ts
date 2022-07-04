@@ -8,11 +8,11 @@ export class User {
   readonly _id: string;
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: true, unique: true, index: true })
   username!: string;
 
   @Field()
-  @Property({ required: true })
+  @Property({ required: true, unique: true })
   email!: string;
 
   @Property({ required: true })

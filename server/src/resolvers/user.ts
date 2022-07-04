@@ -11,7 +11,7 @@ import {
   Root,
 } from 'type-graphql';
 import { MyContext } from '../types';
-import { UsernamePasswordInput } from './UsernamePasswordInput';
+import { CredentialsInput } from './CredentialsInput';
 import argon2 from 'argon2';
 import { validateRegister } from '../util/validateRegister';
 
@@ -52,7 +52,7 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async register(
-    @Arg('credentials') credentials: UsernamePasswordInput,
+    @Arg('credentials') credentials: CredentialsInput,
     @Ctx() { req }: MyContext
   ): Promise<UserResponse> {
     const hashedPassword = await argon2.hash(credentials.password);
@@ -67,7 +67,7 @@ export class UserResolver {
         email: credentials.email,
       });
     } catch (err) {
-      if (err.detail.includes('already exists')) {
+      if (err.code === 11000) {
         console.log(err);
         return {
           errors: [{ field: 'username', message: 'username already exists' }],

@@ -1,6 +1,6 @@
-import { UsernamePasswordInput } from '../resolvers/UsernamePasswordInput';
+import { CredentialsInput } from '../resolvers/CredentialsInput';
 
-export function validateRegister(credentials: UsernamePasswordInput) {
+export function validateRegister(credentials: CredentialsInput) {
   if (credentials.username.length <= 2) {
     return [
       {
