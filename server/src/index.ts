@@ -3,7 +3,7 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/user';
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import Redis from 'ioredis';
 import session from 'express-session';
@@ -12,14 +12,10 @@ import { COOKIE_NAME, __prod__ } from './constants';
 import { ListingResolver } from './resolvers/listing';
 
 async function main() {
-  mongoose.connect(
-    'mongodb://localhost:27017/airbnbClone',
-    {} as ConnectOptions,
-    (err) => {
-      if (err) throw err;
-      console.log('Successfully connected');
-    }
-  );
+  mongoose.connect('mongodb://localhost:27017/airbnbClone', (err) => {
+    if (err) throw err;
+    console.log('Successfully connected');
+  });
 
   const app = express();
 
@@ -33,6 +29,7 @@ async function main() {
       credentials: true,
     })
   );
+
   app.use(
     session({
       name: COOKIE_NAME,

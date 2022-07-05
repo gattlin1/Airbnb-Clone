@@ -1,13 +1,88 @@
-import { Listing } from '../models/listing';
-import { Query, Resolver, Arg } from 'type-graphql';
+import { Address, Listing, ListingModel } from '../models/listing';
+import {
+  Query,
+  Resolver,
+  Arg,
+  Mutation,
+  InputType,
+  Field,
+  Int,
+  Float,
+} from 'type-graphql';
 
+@InputType()
+class ListingInput {
+  @Field()
+  name!: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  category: string;
+
+  @Field(() => [String])
+  amenities: string[];
+
+  @Field(() => Float)
+  price: number;
+
+  @Field(() => Int)
+  recommendedGuestCount: number;
+
+  @Field(() => Int)
+  bedrooms: number;
+
+  @Field(() => Int)
+  beds: number;
+
+  @Field(() => Float)
+  baths: number;
+
+  @Field()
+  imageUrl: string;
+
+  @Field(() => Address)
+  address!: Address;
+}
+
+@InputType()
+class PaginatedListing {
+  @Field(() => [Listing])
+  listings: Listing[];
+  @Field()
+  hasMore: boolean;
+}
+
+// Come back and do paginated loading later
 @Resolver(Listing)
 export class ListingResolver {
   @Query(() => [Listing])
-  listings(
-    @Arg('category', () => String, { nullable: true }) category: string
-  ) {}
+  async listings(
+    @Arg('category', () => String, { nullable: true }) category: string,
+    @Arg('limit', () => Int) limit: number
+  ): Promise<PaginatedListing> {
+    const realLimit = Math.min(30, limit);
+    const realLimitPlusOne = realLimit + 1;
+
+    const listings = await ListingModel.find({ category })
+      .limit(realLimitPlusOne)
+      .exec();
+    return {
+      listings: listings.slice(0, realLimit),
+      hasMore: listings.length === realLimitPlusOne,
+    };
+  }
 
   @Query(() => [Listing])
-  listing(@Arg('id', () => String) id: string) {}
+  async listing(@Arg('id', () => String) id: string): Promise<Listing | null> {
+    return await ListingModel.findById(id).exec();
+  }
+
+  @Mutation(() => Listing)
+  async createListing(
+    @Arg('input') input: ListingInput
+  ): Promise<Listing | null> {
+    return await ListingModel.create(input);
+  }
 }
