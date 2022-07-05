@@ -8,10 +8,30 @@ import {
   Field,
   Int,
   Float,
+  Ctx,
 } from 'type-graphql';
+import { MyContext } from '../types';
 
 @InputType()
-class ListingInput {
+class AddressInput implements Partial<Address> {
+  @Field()
+  street!: string;
+
+  @Field()
+  city!: string;
+
+  @Field()
+  state!: string;
+
+  @Field()
+  zip!: string;
+
+  @Field()
+  country!: string;
+}
+
+@InputType()
+class ListingInput implements Partial<Listing> {
   @Field()
   name!: string;
 
@@ -42,8 +62,8 @@ class ListingInput {
   @Field()
   imageUrl: string;
 
-  @Field(() => Address)
-  address!: Address;
+  @Field(() => AddressInput)
+  address!: AddressInput;
 }
 
 @InputType()
@@ -79,10 +99,14 @@ export class ListingResolver {
     return await ListingModel.findById(id).exec();
   }
 
-  @Mutation(() => Listing)
+  @Mutation(() => Listing, { nullable: true })
   async createListing(
-    @Arg('input') input: ListingInput
+    @Arg('input') input: ListingInput,
+    @Ctx() { req }: MyContext
   ): Promise<Listing | null> {
-    return await ListingModel.create(input);
+    return await ListingModel.create({
+      ...input,
+      hostId: req.session.userId,
+    });
   }
 }

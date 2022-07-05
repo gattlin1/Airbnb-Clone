@@ -1,35 +1,42 @@
 import { Field, Float, Int, ObjectType } from 'type-graphql';
 import { getModelForClass, prop as Property } from '@typegoose/typegoose';
 import { getSchemaOptions } from '../util/typegoose';
-import { User } from './user';
 
 @ObjectType()
 class Review {
   @Field()
+  @Property()
   rating: number;
 
   @Field()
+  @Property()
   comment: string;
 
   @Field()
+  @Property()
   userId: string;
 }
 
 @ObjectType()
 export class Address {
   @Field()
+  @Property()
   street: string;
 
   @Field()
+  @Property()
   city: string;
 
   @Field()
+  @Property()
   state: string;
 
   @Field()
+  @Property()
   zip: string;
 
   @Field()
+  @Property()
   country: string;
 }
 
@@ -82,9 +89,9 @@ export class Listing {
   @Property()
   reviews: Review[];
 
-  @Field()
+  @Field(() => String)
   @Property({ required: true })
-  hostId!: User;
+  hostId!: string;
 
   @Field(() => Address)
   @Property({ required: true })
