@@ -9,6 +9,7 @@ import {
   Int,
   Float,
   Ctx,
+  ObjectType,
 } from 'type-graphql';
 import { MyContext } from '../types';
 
@@ -66,7 +67,7 @@ class ListingInput implements Partial<Listing> {
   address!: AddressInput;
 }
 
-@InputType()
+@ObjectType()
 class PaginatedListing {
   @Field(() => [Listing])
   listings: Listing[];
@@ -77,7 +78,7 @@ class PaginatedListing {
 // Come back and do paginated loading later
 @Resolver(Listing)
 export class ListingResolver {
-  @Query(() => [Listing])
+  @Query(() => PaginatedListing)
   async listings(
     @Arg('category', () => String, { nullable: true }) category: string,
     @Arg('limit', () => Int) limit: number
@@ -85,16 +86,17 @@ export class ListingResolver {
     const realLimit = Math.min(30, limit);
     const realLimitPlusOne = realLimit + 1;
 
-    const listings = await ListingModel.find({ category })
-      .limit(realLimitPlusOne)
-      .exec();
+    const listings = await ListingModel.find({}).limit(realLimitPlusOne).exec();
+
+    console.log(category);
+    console.log(listings);
     return {
       listings: listings.slice(0, realLimit),
       hasMore: listings.length === realLimitPlusOne,
     };
   }
 
-  @Query(() => [Listing])
+  @Query(() => Listing)
   async listing(@Arg('id', () => String) id: string): Promise<Listing | null> {
     return await ListingModel.findById(id).exec();
   }
