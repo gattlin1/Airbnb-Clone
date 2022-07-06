@@ -1,0 +1,26 @@
+fragment ListingInfo on Listing {
+  _id
+  name
+  description
+  category
+  amenities
+  price
+  recommendedGuestCount
+  beds
+  bedrooms
+  baths
+  imageUrl
+  reviews {
+    rating
+    comment
+    userId
+  }
+  hostId
+  address {
+    street
+    city
+    country
+    zip
+    state
+  }
+}

@@ -1,0 +1,8 @@
+query Listings($limit: Int!) {
+  listings(limit: $limit) {
+    listings {
+      ...ListingInfo
+    }
+    hasMore
+  }
+}
