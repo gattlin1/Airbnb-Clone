@@ -5,11 +5,13 @@
   .user-options-button {
     display: flex;
     flex-direction: row;
-    padding: 0.5rem;
     cursor: pointer;
     align-items: center;
+    justify-content: space-around;
     border: none;
-    border-radius: 100%;
+    border-radius: 0.3rem;
+    width: 4rem;
+    height: 2rem;
     background-color: rgba(221, 221, 221, 0.5);
   }
 }
@@ -18,18 +20,27 @@
   display: none;
   position: absolute;
   right: 1rem;
-  top: 4.1rem;
-  border: 0.1rem solid #ccc;
-  border-radius: 0.5rem;
+  top: 4.5rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 0.3rem;
+  width: 15rem;
 
   ul {
     list-style: none;
 
     li {
-      margin-bottom: 0.1rem;
+      padding: 0.3rem;
+
+      &:first-child {
+        margin-top: 0.3rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0.3rem;
+      }
 
       &:hover {
-        background-color: #ccc;
+        background-color: rgba(221, 221, 221, 0.5);
       }
     }
   }

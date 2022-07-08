@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 function UserActions() {
@@ -16,15 +17,23 @@ function UserActions() {
     <>
       <div className='user-actions'>
         <button className='user-options-button' onClick={() => handleOptions()}>
-          <i className='fa-regular fa-user'></i>
+          <div className='user-logo'>
+            <i className='fa-solid fa-user'></i>
+          </div>
           <i className='fa-solid fa-chevron-down'></i>
         </button>
       </div>
       <div className={userOptionsClasses.join(' ')}>
         <ul>
-          <li>Sign Up</li>
-          <li>Login</li>
-          <li>Create a Listing</li>
+          <Link href='/signup'>
+            <li>Sign Up</li>
+          </Link>
+          <Link href='/login'>
+            <li>Login</li>
+          </Link>
+          <Link href='create listing'>
+            <li>Create a Listing</li>
+          </Link>
         </ul>
       </div>
     </>
