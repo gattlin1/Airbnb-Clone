@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@fortawesome/fontawesome-free": "^6.1.1",
     "formik": "^2.2.9",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
     "next": "12.2.0",
     "next-apollo": "^5.0.8",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.53.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.7.0",

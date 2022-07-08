@@ -1,0 +1,40 @@
+.user-actions {
+  margin-right: 1rem;
+  display: block;
+
+  .user-options-button {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+    cursor: pointer;
+    align-items: center;
+    border: none;
+    border-radius: 100%;
+    background-color: rgba(221, 221, 221, 0.5);
+  }
+}
+
+.user-options {
+  display: none;
+  position: absolute;
+  right: 1rem;
+  top: 4.1rem;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.5rem;
+
+  ul {
+    list-style: none;
+
+    li {
+      margin-bottom: 0.1rem;
+
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+  }
+
+  &.open {
+    display: block;
+  }
+}

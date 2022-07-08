@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+.navbar {
+  position: relative;
+  top: 0;
+  height: 4rem;
+  background-color: #fff;
+  width: 100vw;
+  display: flex;
+  color: $teal;
+  border-bottom: #ccc solid 0.1rem;
+  align-items: center;
+  padding: 0 0.2rem;
+
+  .title-container {
+    flex-grow: 1;
+
+    #title {
+      font-size: 2rem;
+      cursor: pointer;
+    }
+  }
+}
+
+// @media (width > $tablet) {
+//   .Navbar {
+//   }
+// }
