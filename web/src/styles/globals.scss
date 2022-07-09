@@ -1,7 +1,8 @@
-@import '../components/Navbar/Navbar.scss';
-@import '../components/Navbar/UserActions/UserActions.scss';
 @import '@fortawesome/fontawesome-free/css/all.css';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 html,
 body,
 ul {

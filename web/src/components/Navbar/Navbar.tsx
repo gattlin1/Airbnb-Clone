@@ -4,10 +4,10 @@ import UserActions from './UserActions/UserActions';
 
 function Navbar() {
   return (
-    <nav className='navbar'>
-      <div className='title-container'>
+    <nav className='bg-white shadow-lg relative top-0 flex border-b items-center'>
+      <div className='flex-grow ml-4'>
         <Link href='/'>
-          <span id='title'>LandBnB</span>
+          <span className='cursor-pointer text-xl'>LandBnB</span>
         </Link>
       </div>
       <UserActions />

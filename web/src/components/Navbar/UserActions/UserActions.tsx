@@ -31,7 +31,7 @@ function UserActions() {
           <Link href='/login'>
             <li>Login</li>
           </Link>
-          <Link href='create listing'>
+          <Link href='createListing'>
             <li>Create a Listing</li>
           </Link>
         </ul>
