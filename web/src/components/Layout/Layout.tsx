@@ -10,7 +10,7 @@ function Layout({ children }: LayoutProps) {
   return (
     <>
       <Navbar />
-      <main>{children}</main>
+      <main className='h-screen'>{children}</main>
       <Footer />
     </>
   );
