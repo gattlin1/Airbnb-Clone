@@ -31,13 +31,19 @@ function UserActions() {
       >
         <ul className='text-black font-light text-sm'>
           <Link href='/signup'>
-            <li className='hover:bg-gray-100 mt-2 pl-4'>Sign Up</li>
+            <li className='hover:bg-gray-100 mt-2 pl-4 h-8 content-center flex items-center'>
+              Sign Up
+            </li>
           </Link>
           <Link href='/login'>
-            <li className='hover:bg-gray-100 pl-4'>Login</li>
+            <li className='hover:bg-gray-100 pl-4 h-8 flex items-center'>
+              Login
+            </li>
           </Link>
           <Link href='/createListing'>
-            <li className='hover:bg-gray-100 mb-2 pl-4'>Create a Listing</li>
+            <li className='hover:bg-gray-100 mb-2 pl-4 h-8 flex items-center'>
+              Create a Listing
+            </li>
           </Link>
         </ul>
       </div>
