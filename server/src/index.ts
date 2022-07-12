@@ -10,7 +10,7 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { COOKIE_NAME, __prod__ } from './constants';
 import { ListingResolver } from './resolvers/listing';
-import { seedListings } from './util/seedDB';
+// import { seedListings } from './util/seedDB';
 
 async function main() {
   mongoose.connect('mongodb://localhost:27017/airbnbClone', (err) => {
@@ -18,7 +18,7 @@ async function main() {
     console.log('Successfully connected');
   });
 
-  seedListings(); // for populating the database
+  // seedListings(); // for populating the database
 
   const app = express();
 
