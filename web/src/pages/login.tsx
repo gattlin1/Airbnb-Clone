@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
+import { withApollo } from '../utils/withApollo';
 
 function Login() {
   const router = useRouter();
@@ -59,4 +60,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default withApollo({ ssr: false })(Login);

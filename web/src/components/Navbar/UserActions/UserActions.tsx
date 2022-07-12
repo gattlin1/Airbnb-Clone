@@ -3,11 +3,6 @@ import React, { useState } from 'react';
 
 function UserActions() {
   const [optionsOpen, toggleOptionsOpen] = useState(false);
-  const userOptionsClasses = ['user-options'];
-
-  if (optionsOpen) {
-    userOptionsClasses.push('open');
-  }
 
   const handleOptions = () => {
     toggleOptionsOpen(!optionsOpen);
@@ -18,7 +13,7 @@ function UserActions() {
       <div className='mr-4'>
         <button
           className='flex items-center space-x-3 text-black bg-slate-200 rounded-md p-2'
-          onClick={() => handleOptions()}
+          onClick={handleOptions}
         >
           <i className='fa-solid fa-user'></i>
           <i className='fa-solid fa-chevron-down'></i>
@@ -28,6 +23,7 @@ function UserActions() {
         className={`absolute top-20 right-4 border-solid border rounded-md shadow-md border-slate-100 w-64 ${
           !optionsOpen ? 'hidden' : ''
         }`}
+        onClick={handleOptions}
       >
         <ul className='text-black font-light text-sm'>
           <Link href='/signup'>
