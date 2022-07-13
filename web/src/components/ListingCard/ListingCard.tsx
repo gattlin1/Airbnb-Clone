@@ -7,9 +7,9 @@ interface ListingCardProps {
 
 function ListingCard({ listing }: ListingCardProps) {
   return (
-    <div className='max-w-sm rounded-lg  overflow-hidden shadow-lg cursor-pointer'>
+    <div className='max-w-sm rounded-lg  overflow-hidden shadow-lg cursor-pointer h-full'>
       <img
-        className='items-center object-cover h-full w-full'
+        className='items-center object-cover w-full h-48'
         src={listing.imageUrl}
         alt={listing.name}
       />

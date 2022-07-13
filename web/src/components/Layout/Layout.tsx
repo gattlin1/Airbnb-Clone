@@ -9,7 +9,7 @@ function Layout({ children }: LayoutProps) {
   return (
     <>
       <Navbar />
-      <main className='h-screen p-2'>{children}</main>
+      <main className='h-full p-4'>{children}</main>
     </>
   );
 }
