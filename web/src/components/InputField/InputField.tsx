@@ -16,7 +16,7 @@ function InputField({
   console.log(props);
   const [field, { error }] = useField(props);
   const classes =
-    'text-sm border rounded focus:outline-none focus:shadow-outline text-gray-700 appearance-none leading-loose pl-2';
+    'text-sm border rounded focus:outline-none focus:shadow-outline text-gray-700 appearance-none leading-loose pl-2 w-full h-12';
 
   let InputOrTextArea = null;
   if (textArea) InputOrTextArea = <textarea className={classes} cols={4} />;
@@ -35,7 +35,7 @@ function InputField({
   return (
     <div className='w-full'>
       <div className='mb-4'>
-        <label className='text-sm'>{field.name}</label>
+        <label className='text-sm '>{label}</label>
       </div>
       <div className='mb-4'>{InputOrTextArea}</div>
       {error && <div className='text-red'>{error}</div>}
