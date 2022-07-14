@@ -1,5 +1,10 @@
 import { Field, Float, Int, ObjectType } from 'type-graphql';
-import { getModelForClass, prop as Property } from '@typegoose/typegoose';
+import {
+  getModelForClass,
+  ModelOptions,
+  prop as Property,
+  Severity,
+} from '@typegoose/typegoose';
 import { getSchemaOptions } from '../util/typegoose';
 
 @ObjectType()
@@ -40,6 +45,7 @@ export class Address {
   country: string;
 }
 
+@ModelOptions({ options: { allowMixed: Severity.ALLOW } })
 @ObjectType()
 export class Listing {
   @Field(() => String)

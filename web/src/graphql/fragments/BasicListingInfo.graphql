@@ -1,0 +1,22 @@
+fragment BasicListingInfo on Listing {
+  _id
+  name
+  descriptionSnippet
+  category
+  price
+  recommendedGuestCount
+  imageUrl
+  reviews {
+    rating
+    comment
+    userId
+  }
+  hostId
+  address {
+    street
+    city
+    country
+    zip
+    state
+  }
+}

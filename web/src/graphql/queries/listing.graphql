@@ -1,5 +1,5 @@
 query Listing($listingId: String!) {
   listing(id: $listingId) {
-    ...ListingInfo
+    ...DetailedListingInfo
   }
 }

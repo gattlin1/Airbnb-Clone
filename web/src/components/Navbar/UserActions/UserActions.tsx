@@ -20,7 +20,7 @@ function UserActions() {
         </button>
       </div>
       <div
-        className={`absolute top-20 right-4 border-solid border rounded-md shadow-md border-slate-100 w-64 ${
+        className={`absolute top-20 right-4 border-solid border rounded-md shadow-md border-slate-100 w-64 bg-white ${
           !optionsOpen ? 'hidden' : ''
         }`}
         onClick={handleOptions}

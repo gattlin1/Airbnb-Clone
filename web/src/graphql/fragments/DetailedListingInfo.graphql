@@ -1,4 +1,4 @@
-fragment ListingInfo on Listing {
+fragment DetailedListingInfo on Listing {
   _id
   name
   description

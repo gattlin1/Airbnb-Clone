@@ -54,6 +54,7 @@ export type Listing = {
   beds: Scalars['Int'];
   category: Scalars['String'];
   description: Scalars['String'];
+  descriptionSnippet: Scalars['String'];
   hostId: Scalars['String'];
   imageUrl: Scalars['String'];
   name: Scalars['String'];
@@ -145,9 +146,11 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
-export type ErrorsInfoFragment = { __typename?: 'FieldError', field: string, message: string };
+export type BasicListingInfoFragment = { __typename?: 'Listing', _id: string, name: string, descriptionSnippet: string, category: string, price: number, recommendedGuestCount: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } };
 
-export type ListingInfoFragment = { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } };
+export type DetailedListingInfoFragment = { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } };
+
+export type ErrorsInfoFragment = { __typename?: 'FieldError', field: string, message: string };
 
 export type UserInfoFragment = { __typename?: 'User', _id: string, username: string, email: string };
 
@@ -192,15 +195,39 @@ export type ListingsQueryVariables = Exact<{
 }>;
 
 
-export type ListingsQuery = { __typename?: 'Query', listings: { __typename?: 'PaginatedListing', hasMore: boolean, listings: Array<{ __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } }> } };
+export type ListingsQuery = { __typename?: 'Query', listings: { __typename?: 'PaginatedListing', hasMore: boolean, listings: Array<{ __typename?: 'Listing', _id: string, name: string, descriptionSnippet: string, category: string, price: number, recommendedGuestCount: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } }> } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', _id: string, username: string, email: string } | null };
 
-export const ListingInfoFragmentDoc = gql`
-    fragment ListingInfo on Listing {
+export const BasicListingInfoFragmentDoc = gql`
+    fragment BasicListingInfo on Listing {
+  _id
+  name
+  descriptionSnippet
+  category
+  price
+  recommendedGuestCount
+  imageUrl
+  reviews {
+    rating
+    comment
+    userId
+  }
+  hostId
+  address {
+    street
+    city
+    country
+    zip
+    state
+  }
+}
+    `;
+export const DetailedListingInfoFragmentDoc = gql`
+    fragment DetailedListingInfo on Listing {
   _id
   name
   description
@@ -254,10 +281,10 @@ ${UserInfoFragmentDoc}`;
 export const CreateListingDocument = gql`
     mutation CreateListing($input: ListingInput!) {
   createListing(input: $input) {
-    ...ListingInfo
+    ...DetailedListingInfo
   }
 }
-    ${ListingInfoFragmentDoc}`;
+    ${DetailedListingInfoFragmentDoc}`;
 export type CreateListingMutationFn = Apollo.MutationFunction<CreateListingMutation, CreateListingMutationVariables>;
 
 /**
@@ -384,10 +411,10 @@ export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutatio
 export const ListingDocument = gql`
     query Listing($listingId: String!) {
   listing(id: $listingId) {
-    ...ListingInfo
+    ...DetailedListingInfo
   }
 }
-    ${ListingInfoFragmentDoc}`;
+    ${DetailedListingInfoFragmentDoc}`;
 
 /**
  * __useListingQuery__
@@ -420,12 +447,12 @@ export const ListingsDocument = gql`
     query Listings($limit: Int!) {
   listings(limit: $limit) {
     listings {
-      ...ListingInfo
+      ...BasicListingInfo
     }
     hasMore
   }
 }
-    ${ListingInfoFragmentDoc}`;
+    ${BasicListingInfoFragmentDoc}`;
 
 /**
  * __useListingsQuery__

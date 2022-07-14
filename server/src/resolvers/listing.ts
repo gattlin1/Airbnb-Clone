@@ -10,6 +10,8 @@ import {
   Float,
   Ctx,
   ObjectType,
+  FieldResolver,
+  Root,
 } from 'type-graphql';
 import { MyContext } from '../types';
 
@@ -78,6 +80,14 @@ class PaginatedListing {
 // Come back and do paginated loading later
 @Resolver(Listing)
 export class ListingResolver {
+  @FieldResolver(() => String)
+  descriptionSnippet(@Root() root: any) {
+    if (root.description.length > 50) {
+      return root.description.slice(0, 47) + '...';
+    }
+    return root.description;
+  }
+
   @Query(() => PaginatedListing)
   async listings(
     @Arg('category', () => String, { nullable: true }) category: string,
@@ -86,10 +96,10 @@ export class ListingResolver {
     const realLimit = Math.min(30, limit);
     const realLimitPlusOne = realLimit + 1;
 
+    console.log(category);
+
     const listings = await ListingModel.find({}).limit(realLimitPlusOne).exec();
 
-    console.log(category);
-    console.log(listings);
     return {
       listings: listings.slice(0, realLimit),
       hasMore: listings.length === realLimitPlusOne,

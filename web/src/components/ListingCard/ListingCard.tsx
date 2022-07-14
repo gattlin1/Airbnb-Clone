@@ -1,8 +1,8 @@
 import React from 'react';
-import { Listing } from '../../generated/graphql';
+import { BasicListingInfoFragment } from '../../generated/graphql';
 
 interface ListingCardProps {
-  listing: Listing;
+  listing: BasicListingInfoFragment;
 }
 
 function ListingCard({ listing }: ListingCardProps) {
@@ -18,7 +18,7 @@ function ListingCard({ listing }: ListingCardProps) {
         <div className='text-md mb-2'>
           {listing.address.city}, {listing.address.state}
         </div>
-        <p className='text-gray-700 text-xs'>{listing.description}</p>
+        <p className='text-gray-700 text-xs'>{listing.descriptionSnippet}</p>
       </div>
       <div className='px-6 pt-4 pb-2'>${listing.price} night</div>
     </div>

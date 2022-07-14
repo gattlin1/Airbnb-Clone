@@ -2,8 +2,9 @@ import ListingCard from '../components/ListingCard/ListingCard';
 import { useListingsQuery } from '../generated/graphql';
 import { withApollo } from '../utils/withApollo';
 
-const Index = () => {
+function Index() {
   const { data } = useListingsQuery({ variables: { limit: 15 } });
+
   let listings = null;
   if (data?.listings?.listings) {
     listings = data.listings.listings.map((listing) => (
@@ -20,6 +21,6 @@ const Index = () => {
       {listings}
     </div>
   );
-};
+}
 
 export default withApollo({ ssr: true })(Index);

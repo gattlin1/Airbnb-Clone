@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import InputField from '../components/InputField/InputField';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
 import { withApollo } from '../utils/withApollo';
 
@@ -23,7 +24,7 @@ function Login() {
                 me: data?.login.user,
               },
             });
-            cache.evict({ fieldName: 'posts:{}' });
+            cache.evict({ fieldName: 'listings:{}' });
           },
         });
 
@@ -40,7 +41,7 @@ function Login() {
     >
       {({ isSubmitting }) => (
         <div>
-          {/* <InputField
+          <InputField
             name='usernameOrEmail'
             label='Username or Email'
             placeholder='Username or Email'
@@ -50,7 +51,7 @@ function Login() {
             label='Password'
             placeholder='Password'
             type='password'
-          /> */}
+          />
           <button type='submit'>Login</button>
           <Link href='/forgot-password'>Forgot Password?</Link>
           <Link href='/register'>Don't have an account? Register here</Link>
