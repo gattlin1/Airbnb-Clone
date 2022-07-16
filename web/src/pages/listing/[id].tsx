@@ -34,7 +34,7 @@ function Listing() {
   return (
     <div>
       <h2 className='text-4xl'>{data?.listing.name}</h2>
-      <div className='text-sm mb-2'>
+      <div className='font-light text-sm mb-2'>
         {data?.listing.address.city}, {data?.listing.address.state},{' '}
         {data?.listing.address.country}
       </div>
@@ -47,36 +47,38 @@ function Listing() {
       </div>
 
       <div>
-        <ul className='list-decimal font-extralight'>
+        <ul className='font-extralight'>
           <li className='inline-block mr-1'>
-            <span>
-              {data?.listing.recommendedGuestCount}{' '}
-              <i className='fa-solid fa-users'></i>
-            </span>
+            <span>{data?.listing.recommendedGuestCount} guests</span>
           </li>
           <li className='inline-block mr-1'>
             <span>· {data?.listing.bedrooms} bedrooms</span>
           </li>
           <li className='inline-block mr-1'>
-            <span>
-              · {data?.listing.beds} <i className='fa-solid fa-bed'></i>
-            </span>
+            <span>· {data?.listing.beds} beds</span>
           </li>
           <li className='inline-block mr-1'>
-            <span>
-              · {data?.listing.baths} <i className='fa-solid fa-bath'></i>
-            </span>
+            <span>· {data?.listing.baths} baths</span>
           </li>
         </ul>
-        <hr />
+        <hr className='mt-2 mb-4' />
         <div>
-          <div className=' font-medium text-xl'>Amenities</div>
-          {data?.listing.amenities.map((amenity) => (
-            <div>{amenity}</div>
+          <div className='font-medium text-xl'>Amenities</div>
+          {data?.listing.amenities.map((amenity, i) => (
+            <div key={i} className='font-light text-sm mb-2'>
+              {amenity}
+            </div>
           ))}
         </div>
-        <hr />
-        <div>{data?.listing.description}</div>
+        <hr className='mt-4 mb-4' />
+        <div>
+          <div className='font-medium text-xl'>Description</div>
+          <div className='font-light text-sm'>{data?.listing.description}</div>
+        </div>
+        <hr className='mt-4 mb-4' />
+      </div>
+      <div>
+        <div className='font-medium text-xl'>Reviews</div>
       </div>
     </div>
   );
