@@ -7,6 +7,12 @@ export async function seedListings() {
   );
   await ListingModel.deleteMany({});
   for (let i = 0; i < listings.length; i++) {
+    let sum = 0;
+    listings[i].reviews.forEach((review) => {
+      sum += review.rating;
+    });
+    listings[i].avgRating = sum / listings[i].reviews.length;
+
     listings[i].save();
   }
 }

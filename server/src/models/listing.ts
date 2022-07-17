@@ -8,7 +8,7 @@ import {
 import { getSchemaOptions } from '../util/typegoose';
 
 @ObjectType()
-class Review {
+export class Review {
   @Field()
   @Property()
   rating: number;
@@ -90,6 +90,10 @@ export class Listing {
   @Field()
   @Property()
   imageUrl: string;
+
+  @Field(() => Float)
+  @Property()
+  avgRating: number;
 
   @Field(() => [Review])
   @Property()

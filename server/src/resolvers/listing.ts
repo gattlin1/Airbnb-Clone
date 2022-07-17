@@ -1,4 +1,4 @@
-import { Address, Listing, ListingModel } from '../models/listing';
+import { Address, Listing, ListingModel, Review } from '../models/listing';
 import {
   Query,
   Resolver,
@@ -69,6 +69,15 @@ class ListingInput implements Partial<Listing> {
   address!: AddressInput;
 }
 
+@InputType()
+class ReviewInput implements Partial<Review> {
+  @Field()
+  rating: number;
+
+  @Field()
+  comment: string;
+}
+
 @ObjectType()
 class PaginatedListing {
   @Field(() => [Listing])
@@ -90,14 +99,10 @@ export class ListingResolver {
 
   @Query(() => PaginatedListing)
   async listings(
-    @Arg('category', () => String, { nullable: true }) category: string,
     @Arg('limit', () => Int) limit: number
   ): Promise<PaginatedListing> {
     const realLimit = Math.min(30, limit);
     const realLimitPlusOne = realLimit + 1;
-
-    console.log(category);
-
     const listings = await ListingModel.find({}).limit(realLimitPlusOne).exec();
 
     return {
@@ -120,5 +125,31 @@ export class ListingResolver {
       ...input,
       hostId: req.session.userId,
     });
+  }
+
+  @Mutation(() => Listing)
+  async createReview(
+    @Arg('id', () => String) id: string,
+    @Arg('review') review: ReviewInput,
+    @Ctx() { req }: MyContext
+  ): Promise<Listing | null> {
+    const listing = await ListingModel.findById(id);
+
+    if (!listing) {
+      return null;
+    }
+
+    // In case a rating is out of the 0 - 5 limit.
+    review.rating = Math.max(review.rating, 0);
+    review.rating = Math.min(review.rating, 5);
+
+    const newRating =
+      (listing.avgRating * listing.reviews.length + review.rating) /
+      (listing.reviews.length + 1);
+
+    listing.avgRating = newRating;
+    listing.reviews.push({ ...review, userId: req.session.userId } as Review);
+
+    return await listing.save();
   }
 }
