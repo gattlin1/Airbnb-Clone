@@ -9,6 +9,7 @@ export async function seedListings() {
   for (let i = 0; i < listings.length; i++) {
     let sum = 0;
     listings[i].reviews.forEach((review) => {
+      review.title = `${review.userId} thinks ${review.rating}`;
       sum += review.rating;
     });
     listings[i].avgRating = sum / listings[i].reviews.length;

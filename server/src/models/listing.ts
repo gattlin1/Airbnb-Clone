@@ -15,6 +15,10 @@ export class Review {
 
   @Field()
   @Property()
+  title: string;
+
+  @Field()
+  @Property()
   comment: string;
 
   @Field()

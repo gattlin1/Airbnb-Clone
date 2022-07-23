@@ -72,6 +72,9 @@ class ListingInput implements Partial<Listing> {
 @InputType()
 class ReviewInput implements Partial<Review> {
   @Field()
+  title: string;
+
+  @Field()
   rating: number;
 
   @Field()

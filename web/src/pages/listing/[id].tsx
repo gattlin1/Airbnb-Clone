@@ -78,7 +78,29 @@ function Listing() {
         <hr className='mt-4 mb-4' />
       </div>
       <div>
-        <div className='font-medium text-xl'>Reviews</div>
+        <div className='font-medium text-xl mb-2'>Reviews</div>
+        {data?.listing.reviews.length ? (
+          <div>
+            <i className='fa-solid fa-star'></i> {data.listing.avgRating} ·{' '}
+            {data.listing.reviews.length} review
+            {data.listing.reviews.length > 1 && 's'}
+          </div>
+        ) : (
+          <div>No Reviews Yet</div>
+        )}
+        <div className='grid gap-4 grid-cols-1 md:grid-cols-2 sm:grid-cols-1 mt-2'>
+          {data?.listing.reviews.map((review, i) => (
+            <div key={i} className='font-light mb-2'>
+              <div className='flex'>
+                <div className='flex-grow'>{review.title} </div>
+                <span className=''>
+                  {review.rating} <i className='fa-solid fa-star'></i>
+                </span>
+              </div>
+              <div className='text-sm'>{review.comment}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

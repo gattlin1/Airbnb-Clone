@@ -10,7 +10,9 @@ fragment DetailedListingInfo on Listing {
   bedrooms
   baths
   imageUrl
+  avgRating
   reviews {
+    title
     rating
     comment
     userId

@@ -49,6 +49,7 @@ export type Listing = {
   _id: Scalars['String'];
   address: Address;
   amenities: Array<Scalars['String']>;
+  avgRating: Scalars['Float'];
   baths: Scalars['Float'];
   bedrooms: Scalars['Int'];
   beds: Scalars['Int'];
@@ -80,6 +81,7 @@ export type ListingInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createListing?: Maybe<Listing>;
+  createReview: Listing;
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -88,6 +90,12 @@ export type Mutation = {
 
 export type MutationCreateListingArgs = {
   input: ListingInput;
+};
+
+
+export type MutationCreateReviewArgs = {
+  id: Scalars['String'];
+  review: ReviewInput;
 };
 
 
@@ -122,7 +130,6 @@ export type QueryListingArgs = {
 
 
 export type QueryListingsArgs = {
-  category?: InputMaybe<Scalars['String']>;
   limit: Scalars['Int'];
 };
 
@@ -130,7 +137,14 @@ export type Review = {
   __typename?: 'Review';
   comment: Scalars['String'];
   rating: Scalars['Float'];
+  title: Scalars['String'];
   userId: Scalars['String'];
+};
+
+export type ReviewInput = {
+  comment: Scalars['String'];
+  rating: Scalars['Float'];
+  title: Scalars['String'];
 };
 
 export type User = {
@@ -148,7 +162,7 @@ export type UserResponse = {
 
 export type BasicListingInfoFragment = { __typename?: 'Listing', _id: string, name: string, descriptionSnippet: string, category: string, price: number, recommendedGuestCount: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } };
 
-export type DetailedListingInfoFragment = { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } };
+export type DetailedListingInfoFragment = { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, avgRating: number, hostId: string, reviews: Array<{ __typename?: 'Review', title: string, rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } };
 
 export type ErrorsInfoFragment = { __typename?: 'FieldError', field: string, message: string };
 
@@ -161,7 +175,7 @@ export type CreateListingMutationVariables = Exact<{
 }>;
 
 
-export type CreateListingMutation = { __typename?: 'Mutation', createListing?: { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } } | null };
+export type CreateListingMutation = { __typename?: 'Mutation', createListing?: { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, avgRating: number, hostId: string, reviews: Array<{ __typename?: 'Review', title: string, rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } } | null };
 
 export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
@@ -188,7 +202,7 @@ export type ListingQueryVariables = Exact<{
 }>;
 
 
-export type ListingQuery = { __typename?: 'Query', listing: { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, hostId: string, reviews: Array<{ __typename?: 'Review', rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } } };
+export type ListingQuery = { __typename?: 'Query', listing: { __typename?: 'Listing', _id: string, name: string, description: string, category: string, amenities: Array<string>, price: number, recommendedGuestCount: number, beds: number, bedrooms: number, baths: number, imageUrl: string, avgRating: number, hostId: string, reviews: Array<{ __typename?: 'Review', title: string, rating: number, comment: string, userId: string }>, address: { __typename?: 'Address', street: string, city: string, country: string, zip: string, state: string } } };
 
 export type ListingsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -239,7 +253,9 @@ export const DetailedListingInfoFragmentDoc = gql`
   bedrooms
   baths
   imageUrl
+  avgRating
   reviews {
+    title
     rating
     comment
     userId
